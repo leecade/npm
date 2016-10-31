@@ -115,6 +115,22 @@ test('without-scope', function (t) {
   })
 })
 
+test('without-scope-and-logged-in', function (t) {
+  common.npm([
+    'view',
+    '--cache-min=0',
+    '--scope=example',
+    'scope-header-test',
+    'gotScope'
+  ], conf(withoutScope), function (err, code, stdout, stderr) {
+    if (err) throw err
+    t.is(code, 0, 'command ran ok')
+    t.comment(stderr.trim())
+    t.is(stdout.trim(), 'false', 'got version matched to NO scope header')
+    t.done()
+  })
+})
+
 test('cleanup', function (t) {
   server.close()
   cleanup()
